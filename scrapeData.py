@@ -1,10 +1,10 @@
 import praw as pr
 import pandas as pd
-import datetime as dt
+from pymongo import MongoClient 
 
 # Extracting relevant information about each flair.
 def ExtractFlairInfo(flair):
-  get_subreddits = subreddit.search(flair, limit=30)
+  get_subreddits = subreddit.search(flair, limit=300)
   for submission in get_subreddits:
     submission_info["id"].append(submission.id)
     submission_info["title"].append(submission.title)
@@ -37,7 +37,7 @@ flairs_list = ["Political", "Non-political", "Reddiquette", "AskIndia", "Science
 # Storing relevant information about each flair on the subreddit
 submission_info = {"id":[], "title":[], "url": [], "flair": [], "body":[], "number_of_comments":[], "comments":[], "score":[], "upvote_ratio":[], "creation_date":[]}
 
-# Iteratnig through all the flairs and extracting relevant information
+# Iterating through all the flairs and extracting relevant information
 for flair in flairs_list:
 	ExtractFlairInfo(flair)
 
@@ -46,3 +46,14 @@ redditData = pd.DataFrame(submission_info)
 
 # Storing results in CSV format
 redditData.to_csv(r'./redditData.csv')
+
+# Setting up MongoDB client 
+client = MongoClient() 
+client = MongoClient("mongodb://localhost:27017/") 
+
+mydatabase = client.redditFlair
+mycollection = mydatabase['myTable']
+
+# Dumping data from DataFrame onto MongoDB 
+mydatabase.mycollection.insert_many(redditData.to_dict('records'))
+
