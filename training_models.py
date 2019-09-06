@@ -4,7 +4,9 @@ from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.stem import WordNetLemmatizer 
+from sklearn.model_selection import train_test_split
 
+# Getting stopwords set from english language
 STOPWORDS = set(stopwords.words('english'))
 
 flairs_list = ["Political", "Non-political", "Reddiquette", "AskIndia", "Science/Technology", "Policy/Economy", "Finance/Business", "Sports", "Photogrpahy", "AMA"]
@@ -53,4 +55,14 @@ selected_features = ['title', 'body', 'comments']
 # Pre-processing the text contained in the selected features
 for feature in selected_features:
 	PreProcessing(feature)
+
+# Getting combination of features to train models
+combination_of_features = df["title"] + df["comments"] + df["body"] + df["url"]
+df = df.assign(combination_of_features = combination_of_features)
+
+x = df.combination_of_features
+y = df.flair
+# Splitting data into training and testing sets
+x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.25, random_state=10)
+
 
