@@ -1,15 +1,17 @@
 import pandas as pd
 from pymongo import MongoClient 
 from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
+from nltk.stem import PorterStemmer, WordNetLemmatizer
 from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.stem import WordNetLemmatizer 
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.feature_extraction.text import TfidfTransformer
+from sklearn.naive_bayes import MultinomialNB
 
 # Getting stopwords set from english language
 STOPWORDS = set(stopwords.words('english'))
-
-flairs_list = ["Political", "Non-political", "Reddiquette", "AskIndia", "Science/Technology", "Policy/Economy", "Finance/Business", "Sports", "Photogrpahy", "AMA"]
 
 def ConvertToString(value):
     return str(value)
@@ -64,5 +66,13 @@ x = df.combination_of_features
 y = df.flair
 # Splitting data into training and testing sets
 x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.25, random_state=10)
+
+def NaiveBayes(x_train,y_train,x_test,y_test):
+	nb = Pipeline([('vect', CountVectorizer()), ('tfidf', TfidfTransformer()), ('clf', MultinomialNB())])
+	nb.fit(x_train,y_train)
+	y_pred = nb.predict(x_test)
+	print("Naive Bayes: "+str(accuracy_score(y_pred,y_test)))
+
+NaiveBayes(x_train,y_train,x_test,y_test)
 
 
