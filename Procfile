@@ -1,1 +1,1 @@
-web: gunicorn Reddit-Flair-Detector --log-file -
+web: gunicorn Reddit-Flair-Detector:app
