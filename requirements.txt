@@ -7,7 +7,7 @@ cycler==0.10.0
 datashape==0.5.2
 decorator==4.4.0
 Flask==1.1.1
-gunicorn-19.9.0
+gunicorn==19.9.0
 idna==2.8
 itsdangerous==1.1.0
 Jinja2==2.10.1
