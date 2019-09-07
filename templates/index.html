@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>Reddit Flair Detector</title>
+	<style>
+		.navbar{
+			top: 0;
+			width: 100%;
+			min-height: 50px;
+		}
+		.grad{
+			background: linear-gradient(to right bottom, #00FFF3, #1A00FF);
+		}
+    	input[type=url]{
+    		width:60%;
+    	}
+	</style>
+	</head>
+
+	<body>
+		<div class = 'grad' padding=16dp>
+		<div class='navbar'>
+			<div class='container'>
+			<font color = #FFFFFF>
+			<br>
+			<br>
+			<h1 align='center'>Reddit Flair Detector</h1>
+			</font>
+			</div>
+		</div>
+		<div class='container'>
+		<font color = #FFFFFF align='center'>
+			<br>
+			<br>
+			<br>
+			<h3>Enter a Reddit Post URL from the sub-reddit r/India:</h3>
+			<form action="{{url_for('flairDetect')}}" method="post">
+				<input type="url" name="redditpost">
+				<input type="submit">
+			</form>
+			<br>
+			<br>
+			<h3> Predicted Flair for the given Reddit URL: <b><i><u>{{ flair }}</u></i></b>
+			</h3>
+			<br>
+			<br>
+		</font>
+		</div>
+	</div>
+	</body>
+</html>
