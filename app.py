@@ -1,7 +1,7 @@
 from flask import Flask, render_template,request
 from helper import helper
 import os
-port = process.env.PORT || 5000
+port = int(os.getenv('VCAP_APP_PORT', 8080))
 
 app = Flask(__name__)
 @app.route('/')
@@ -18,4 +18,4 @@ def flairDetect():
 # def postAnalysis():
 # 	return render_template('analysis.html')
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=port)
