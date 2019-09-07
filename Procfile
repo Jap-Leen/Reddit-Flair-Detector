@@ -1,1 +1,1 @@
-web: gunicorn Reddit-Flair-Detector:app
+web: gunicorn app:app
