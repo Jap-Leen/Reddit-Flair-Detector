@@ -39,7 +39,7 @@ def RemoveStopwords(text):
     text = ' '.join(word for word in text.split() if word not in STOPWORDS)
     return text
 
-def PreProcessing(feature):
+def PreProcessing(df, feature):
 	df[feature] = df[feature].apply(ConvertToString)
 	df[feature] = df[feature].str.lower()
 	# df[feature] = df[feature].apply(Stemming)
@@ -62,7 +62,7 @@ def helper(url):
 	selected_features = ['title', 'body', 'comments']
 	# Pre-processing the text contained in the selected features
 	for feature in selected_features:
-		PreProcessing(feature)
+		PreProcessing(df, feature)
 	# Getting combination of features
 	combination_of_features = df["title"] + df["comments"] + df["body"]
 	df = df.assign(combination_of_features = combination_of_features)
