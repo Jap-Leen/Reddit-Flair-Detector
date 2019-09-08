@@ -36,7 +36,7 @@ def Stemming(text):
 	return text
 
 def RemoveStopwords(text):
-    text = ' '.join(word for word in text.split() if word not in STOPWORDS)
+    text = ' '.join(word for word in text.split() if word not in stops)
     return text
 
 def PreProcessing(df, feature):
