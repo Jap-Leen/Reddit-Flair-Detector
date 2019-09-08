@@ -57,14 +57,14 @@ def helper(url):
 	for comment_c in submission.comments:
 		comment+= ' ' + comment_c.body
 	submission_info["comments"].append(comment)
-	data = pd.DataFrame(submission_info)
-	data.fillna("")
+	df = pd.DataFrame(submission_info)
+	df.fillna("")
 	selected_features = ['title', 'body', 'comments']
 	# Pre-processing the text contained in the selected features
 	for feature in selected_features:
 		PreProcessing(feature)
 	# Getting combination of features
-	combination_of_features = data["title"] + data["comments"] + data["body"]
-	data = data.assign(combination_of_features = combination_of_features)
+	combination_of_features = df["title"] + df["comments"] + df["body"]
+	df = df.assign(combination_of_features = combination_of_features)
 	return(model.predict(data['combination_of_features'])[0])
 
