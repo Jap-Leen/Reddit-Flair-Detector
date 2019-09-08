@@ -66,5 +66,5 @@ def helper(url):
 	# Getting combination of features
 	combination_of_features = df["title"] + df["comments"] + df["body"]
 	df = df.assign(combination_of_features = combination_of_features)
-	return(model.predict(data['combination_of_features'])[0])
+	return(model.predict(df['combination_of_features'])[0])
 
