@@ -45,32 +45,6 @@ def PreProcessing(feature):
 	# df[feature] = df[feature].apply(Lemmatization)
 	df[feature] = df[feature].apply(RemoveStopwords)
 
-# Setting up MongoDB client 
-client = MongoClient() 
-client = MongoClient("mongodb://localhost:27017/") 
-
-# Connecting to the reddit data collection in the database
-mydatabase = client.redditFlair
-mycollection = mydatabase['myTable']
-Data = mydatabase.mycollection
-df = pd.DataFrame(list(Data.find()))
-df = df.fillna("")
-
-selected_features = ['title', 'body', 'comments']
-
-# Pre-processing the text contained in the selected features
-for feature in selected_features:
-	PreProcessing(feature)
-
-# Getting combination of features to train models
-combination_of_features = df["title"] + df["comments"] + df["body"] + df["url"]
-df = df.assign(combination_of_features = combination_of_features)
-
-x = df.combination_of_features
-y = df.flair
-# Splitting data into training and testing sets
-x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.25, random_state=10)
-
 def MultinomialNaiveBayes(x_train,y_train,x_test,y_test):
 	nb = Pipeline([('vect', CountVectorizer()), ('tfidf', TfidfTransformer()), ('clf', MultinomialNB())])
 	nb.fit(x_train,y_train)
@@ -91,10 +65,40 @@ def LogisticRegressionC(x_train, y_train, x_test, y_test):
 	y_pred = logistic_reg.predict(x_test)
 	print("Logistic Regression accuracy_score: "+str(accuracy_score(y_pred,y_test)))
 
-# Training different models
-MultinomialNaiveBayes(x_train,y_train,x_test,y_test)
-LinearSVM(x_train,y_train,x_test,y_test)
-LogisticRegressionC(x_train,y_train,x_test,y_test)
+if __name__ == '__main__':
+	global client, mydatabase, mycollection, Data, df, selected_features, combination_of_features
+	global x, y, x_train, x_test, y_train, y_test
+	# Setting up MongoDB client 
+	client = MongoClient() 
+	client = MongoClient("mongodb://localhost:27017/") 
+
+	# Connecting to the reddit data collection in the database
+	mydatabase = client.redditFlair
+	mycollection = mydatabase['myTable']
+	Data = mydatabase.mycollection
+	df = pd.DataFrame(list(Data.find()))
+	df = df.fillna("")
+
+	selected_features = ['title', 'body', 'comments']
+
+	# Pre-processing the text contained in the selected features
+	for feature in selected_features:
+		PreProcessing(feature)
+
+	# Getting combination of features to train models
+	combination_of_features = df["title"] + df["comments"] + df["body"] + df["url"]
+	df = df.assign(combination_of_features = combination_of_features)
+
+	x = df.combination_of_features
+	y = df.flair
+	# Splitting data into training and testing sets
+	x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.25, random_state=10)
+
+
+	# Training different models
+	MultinomialNaiveBayes(x_train,y_train,x_test,y_test)
+	LinearSVM(x_train,y_train,x_test,y_test)
+	LogisticRegressionC(x_train,y_train,x_test,y_test)
 
 
 
