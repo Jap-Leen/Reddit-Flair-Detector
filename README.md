@@ -1,6 +1,6 @@
 # Reddit-Flair-Detector - flaiReddit
 
-#flaiReddit is a Reddit Flair Detector for subreddit [r/india](https://www.reddit.com/r/india/), that takes any post's URL as input and predicts the flair for the post using Machine Learning models. The web application for the same is hosted on Heroku at [flaiReddit(https://flaireddit.herokuapp.com/)]. The web-application also contans some useful data plots obtained after analysis of collected data.
+# flaiReddit is a Reddit Flair Detector for subreddit [r/india](https://www.reddit.com/r/india/), that takes any post's URL as input and predicts the flair for the post using Machine Learning models. The web application for the same is hosted on Heroku at [flaiReddit(https://flaireddit.herokuapp.com/)]. The web-application also contans some useful data plots obtained after analysis of collected data.
   
 ## Codebase
 
