@@ -50,7 +50,7 @@ Data so collected is stored as a MongoDB collection. Its JSON file can be found 
 ### Data spliting
 The collected data is split as follows:
 <br>
-0.25% as Test Data and 0.75% as Training Data
+<i>0.25%</i> as <i>Test Data</i> and <i>0.75%</i> as <i>Training Data</i>
 
 ### Training 
 Features of the posts like Title, Comment, Body and URL are used in various possible combinations and trained on three algorithms: Multinomial Naive Bayes, Linear SVM and Logistic Regression.
