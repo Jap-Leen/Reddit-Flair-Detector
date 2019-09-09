@@ -16,10 +16,10 @@ The dependencies can be found in [requirements.txt](https://github.com/Jap-Leen/
 - [scrapeData.py](https://github.com/Jap-Leen/Reddit-Flair-Detector/blob/master/scrapeData.py): Used to scrape r/India posts from Reddit.
 - [training_models.py](https://github.com/Jap-Leen/Reddit-Flair-Detector/blob/master/training_models.py): Used to pre-process text and train various models. It was also used to analyse data by plotting trends.
 - [helper.py](https://github.com/Jap-Leen/Reddit-Flair-Detector/blob/master/helper.py): Used to get predicted flair for given URL test.
-- [requirements.txt](https://github.com/Jap-Leen/Reddit-Flair-Detector/blob/master/requirements.txt): Contains all dependencies for the project
+- [requirements.txt](https://github.com/Jap-Leen/Reddit-Flair-Detector/blob/master/requirements.txt): Contains all dependencies for the project.
 - [nltk.txt](https://github.com/Jap-Leen/Reddit-Flair-Detector/blob/master/nltk.txt): Contains NLTK library dependencies for deployment on Heroku.
 - [data](https://github.com/Jap-Leen/Reddit-Flair-Detector/tree/master/data): Contains CSV and JSON files of collected posts.
-- [templates](https://github.com/Jap-Leen/Reddit-Flair-Detector/tree/master/templates): Contains HTML script for the web application
+- [templates](https://github.com/Jap-Leen/Reddit-Flair-Detector/tree/master/templates): Contains HTML script for the web application.
 - [static](https://github.com/Jap-Leen/Reddit-Flair-Detector/tree/master/static): Contains [images](https://github.com/Jap-Leen/Reddit-Flair-Detector/tree/master/static/images) folder having the plots displayed on the web-application, obtained after data analysis.
 
 
@@ -49,6 +49,7 @@ Data so collected is stored as a MongoDB collection. Its JSON file can be found 
 
 ### Data spliting
 The collected data is split as follows:
+<br>
 0.25% as Test Data and 0.75% as Training Data
 
 ### Training 
@@ -63,7 +64,7 @@ The model with highest accuracy score is saved and loaded for predicting the fla
 
 The resulting scores for different stages of pre-processing, features and models can be found above.
 
-The best accuracy score obtained was of 0.793248945147679. The features selected were the combination of Title, Body, Comments and URL. The model trained was Linear SVM. (Includes pre-processing, without stemming and lemmatization)
+The best accuracy score obtained was of 0.793248945147679. The features selected were the combination of Title, Body, Comments and URL. The model trained was Linear SVM. (Includes simple pre-processing, without stemming and lemmatization.)
 
 ## References
 
