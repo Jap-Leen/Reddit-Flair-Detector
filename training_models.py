@@ -13,10 +13,12 @@ from sklearn.naive_bayes import MultinomialNB, GaussianNB
 from sklearn.linear_model import SGDClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+from collections import defaultdict
+import matplotlib.pyplot as plt
 
 # Getting stopwords set from english language
 STOPWORDS = set(stopwords.words('english'))
-
+m = dict()
 def ConvertToString(value):
     return str(value)
 
@@ -29,6 +31,9 @@ def Lemmatization(text):
 
 def Stemming(text):
 	token_words = word_tokenize(text)
+	c=len(token_words)
+	if c<1000:
+		m[c]+=1;
 	ps = PorterStemmer()
 	list_stem = [ps.stem(word) for word in token_words if word.isalnum()]
 	text = (" ".join(list_stem))
@@ -41,7 +46,7 @@ def RemoveStopwords(text):
 def PreProcessing(feature):
 	df[feature] = df[feature].apply(ConvertToString)
 	df[feature] = df[feature].str.lower()
-	# df[feature] = df[feature].apply(Stemming)
+	df[feature] = df[feature].apply(Stemming)
 	# df[feature] = df[feature].apply(Lemmatization)
 	df[feature] = df[feature].apply(RemoveStopwords)
 
@@ -82,23 +87,42 @@ if __name__ == '__main__':
 	selected_features = ['title', 'body', 'comments']
 
 	# Pre-processing the text contained in the selected features
-	for feature in selected_features:
-		PreProcessing(feature)
-
+	# for feature in selected_features:
+	# PreProcessing("body")
+	# print(m)
+	# for key in m.keys():
+	# 	if key > 1000:
+	# 		del m[key]
+	# print(m)
+	for ind in df.index:
+		if df['flair'][ind] in m:
+			m[df['flair'][ind]] += df['upvote_ratio'][ind]
+		else:
+			m[df['flair'][ind]]=1
+	print(m)
+	axes = plt.gca()
+	# axes.set_xlim([0,750])
+	axes.set_ylim([70,215])
+	axes.set_ylabel('upvote_ratio')
+	axes.set_xlabel('Flair')
+	axes.set_title('Upvote Ratio per flair')
+	plt.bar(m.keys(), m.values(), color='g')
+	plt.xticks(rotation=90)
+	plt.show()
 	# Getting combination of features to train models
-	combination_of_features = df["title"] + df["comments"] + df["body"] + df["url"]
-	df = df.assign(combination_of_features = combination_of_features)
+	# combination_of_features = df["title"] + df["body"] + df["comments"] + df["url"]
+	# df = df.assign(combination_of_features = combination_of_features)
 
-	x = df.combination_of_features
-	y = df.flair
+	# x = df.combination_of_features
+	# y = df.flair
 	# Splitting data into training and testing sets
-	x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.25, random_state=10)
+	# x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.25, random_state=10)
 
 
 	# Training different models
-	MultinomialNaiveBayes(x_train,y_train,x_test,y_test)
-	LinearSVM(x_train,y_train,x_test,y_test)
-	LogisticRegressionC(x_train,y_train,x_test,y_test)
+	# MultinomialNaiveBayes(x_train,y_train,x_test,y_test)
+	# LinearSVM(x_train,y_train,x_test,y_test)
+	# LogisticRegressionC(x_train,y_train,x_test,y_test)
 
 
 
