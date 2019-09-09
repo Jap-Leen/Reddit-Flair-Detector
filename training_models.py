@@ -1,5 +1,6 @@
 import pandas as pd
 import pickle
+import datetime as dt
 from pymongo import MongoClient 
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer
@@ -19,6 +20,7 @@ import matplotlib.pyplot as plt
 # Getting stopwords set from english language
 STOPWORDS = set(stopwords.words('english'))
 m = dict()
+k = dict()
 def ConvertToString(value):
     return str(value)
 
@@ -70,6 +72,10 @@ def LogisticRegressionC(x_train, y_train, x_test, y_test):
 	y_pred = logistic_reg.predict(x_test)
 	print("Logistic Regression accuracy_score: "+str(accuracy_score(y_pred,y_test)))
 
+def get_date(created):
+	a =  dt.datetime.fromtimestamp(created)
+	return a.strftime("%H")
+
 if __name__ == '__main__':
 	global client, mydatabase, mycollection, Data, df, selected_features, combination_of_features
 	global x, y, x_train, x_test, y_train, y_test
@@ -86,6 +92,8 @@ if __name__ == '__main__':
 
 	selected_features = ['title', 'body', 'comments']
 
+
+	df["timestamp"] = df["creation_date"].apply(get_date)
 	# Pre-processing the text contained in the selected features
 	# for feature in selected_features:
 	# PreProcessing("body")
@@ -95,18 +103,21 @@ if __name__ == '__main__':
 	# 		del m[key]
 	# print(m)
 	for ind in df.index:
-		if df['flair'][ind] in m:
-			m[df['flair'][ind]] += df['upvote_ratio'][ind]
+		if df['timestamp'][ind] in m:
+			m[df['timestamp'][ind]] += 1
 		else:
-			m[df['flair'][ind]]=1
+			m[df['timestamp'][ind]]= 1
 	print(m)
+	for i in sorted (m.keys()):
+		k[i] = m[i]  
+	print(k)
 	axes = plt.gca()
 	# axes.set_xlim([0,750])
-	axes.set_ylim([70,215])
-	axes.set_ylabel('upvote_ratio')
-	axes.set_xlabel('Flair')
-	axes.set_title('Upvote Ratio per flair')
-	plt.bar(m.keys(), m.values(), color='g')
+	axes.set_ylim([10,200])
+	axes.set_ylabel('Number of posts')
+	axes.set_xlabel('Hour of the day')
+	axes.set_title('Temporal Analysis')
+	plt.bar(k.keys(), k.values(), color='g')
 	plt.xticks(rotation=90)
 	plt.show()
 	# Getting combination of features to train models
