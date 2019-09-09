@@ -45,7 +45,7 @@ The following procedures have been executed on the title, body and comments to c
 4. Removing stopwords
 
 ### Storing Data
-Data so collected is stored as a MongoDB collection. Its JSON file can be found [here](https://github.com/Jap-Leen/Reddit-Flair-Detector/blob/master/reddit_flair_initial_data.json).
+Data so collected is stored as a MongoDB collection. Its JSON file can be found [here](https://github.com/Jap-Leen/Reddit-Flair-Detector/blob/master/data/reddit_flair_initial_data.json).
 
 ### Data spliting
 The collected data is split as follows:
