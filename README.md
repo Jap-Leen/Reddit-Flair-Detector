@@ -18,11 +18,11 @@ The dependencies can be found in [requirements.txt](https://github.com/Jap-Leen/
   4. Create a `virtualenv` by executing the following command: `virtualenv venv`.
   5. Activate the `venv` virtual environment by executing the follwing command: `source venv/bin/activate`.
   6. Enter the cloned repository directory and execute `pip install -r requirements.txt`.
-  7. Run 'python app.py' from Terminal. 
+  7. Run `python app.py` from Terminal. 
 
 ## Approach 
 ### Data Scraping
-The python library PRAW has been used to scrape data from the subreddit r/india. 300 posts belonging to each flais were collected and analysed.
+The python library PRAW has been used to scrape data from the subreddit [r/india](https://www.reddit.com/r/india/). 300 posts belonging to each of thee flairs were collected and analysed.
 
 ### Data pre - preprocessing
 The following procedures have been executed on the title, body and comments to clean the data:
@@ -52,7 +52,7 @@ The resulting scores for different stages of pre-processing, features and models
 
 The best accuracy score obtained was of 0.793248945147679. The features selected were the combination of Title, Body, Comments and URL. The model trained was Linear SVM. (Includes pre-processing, without stemming and lemmatization)
 
-### References
+## References
 
 1. http://www.storybench.org/how-to-scrape-reddit-with-python/
 2. https://praw.readthedocs.io/en/latest/code_overview/praw_models.html
